@@ -36,6 +36,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   get: ^4.6.6
+  permission_handler: ^11.3.1
+  on_audio_query: ^2.9.0
 
 dev_dependencies:
   flutter_test:
@@ -76,12 +78,31 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: bold
-       fonts:
-         - asset: assets/bold.otf
-     - family: regular
-       fonts:
-         - asset: assets/regular.otf
+    - family: MarkaziText
+      fonts:
+        - asset: assets/fonts/MarkaziText-VariableFont_wght.ttf
+    #       - asset: fonts/Schyler-Italic.ttf
+    #         style: italic
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand/static/Quicksand-Bold.ttf
+          weight: 700
+    - family: Signika
+      fonts:
+        - asset: assets/fonts/Signika/Signika-VariableFont_wght.ttf
+    #           weight: 700
+    - family: Concert_One
+      fonts:
+        - asset: assets/fonts/Concert_One/ConcertOne-Regular.ttf
+
+    #               weight: 700
+
+    - family: Calibri
+      fonts:
+        - asset: assets/fonts/Calibri/Calibri-Regular.ttf
+        - asset: assets/fonts/Calibri/CalibriBold.TTF
+        - asset: assets/fonts/Calibri/CalibriLight.ttf
+          weight: 600
   #      - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

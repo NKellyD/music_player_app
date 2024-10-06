@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-const bold = 'bold';
-const regular = 'regular';
 
-myStyle({family = regular, color = whiteColor, double? size = 14}){
+const calibri = 'Calibri';
+
+myStyle({family = calibri, color = whiteColor, double? size = 14,fontWeight = FontWeight.normal}){
    TextStyle(
       fontSize: size,
-      fontFamily: family,
+      fontFamily: calibri,
       color: color,
+     fontWeight: fontWeight
   );
 }
