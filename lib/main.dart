@@ -13,9 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Beats',
       theme: ThemeData(
-       primarySwatch: Colors.blue,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+       fontFamily: "regular",
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0
+        )
       ),
 
     );
