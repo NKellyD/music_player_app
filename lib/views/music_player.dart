@@ -13,7 +13,9 @@ class MusicPlayer extends StatefulWidget {
 
 class _MusicPlayerState extends State<MusicPlayer> {
   Color songColor = const Color(0xFF251117);
-  String artisteName ='';
+  String artisteName ='KD (Kelly Derlin)';
+  String songName ='ONE Day';
+  String musicTrackId="6rWblGGW0pBcBcuygxBuWZV";
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -66,8 +68,8 @@ class _MusicPlayerState extends State<MusicPlayer> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Sleeping Beauty',style: textTheme.titleLarge?.copyWith(color: Colors.white),),
-                          Text('End of the World, Epik High',style: textTheme.titleMedium?.copyWith(color: Colors.white60),),
+                          Text(songName,style: textTheme.titleLarge?.copyWith(color: Colors.white),),
+                          Text(artisteName,style: textTheme.titleMedium?.copyWith(color: Colors.white60),),
                         ],
                       ),
                       const Icon(Icons.favorite,color: CustomColor.primaryColor,)
@@ -75,16 +77,34 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   ),
                   const SizedBox(height: 15,),
                   ProgressBar(
-                    progress: Duration(milliseconds: 1000),
-                    buffered: Duration(milliseconds: 2000),
-                    total: Duration(milliseconds: 5000),
-                    bufferedBarColor: Colors.white60,
-                    baseBarColor: Colors.white,
+                    progress: const Duration(minutes: 1),
+                    total: const Duration(minutes: 3,seconds: 30),
+                   // buffered: Duration(milliseconds: 2000),
+                    bufferedBarColor: Colors.white38,
+                    baseBarColor: Colors.white10,
+                    thumbColor: Colors.white,
+                    timeLabelTextStyle: const TextStyle(color: Colors.white),
+                    progressBarColor: Colors.white,
                     onSeek: (duration) {
                       print('User selected a new time: $duration');
                     },
                   ),
+                  const SizedBox(height: 15,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(onPressed: (){}, icon: const Icon(Icons.lyrics_outlined,color: Colors.white,)),
+                      IconButton(onPressed: (){}, icon: const Icon(Icons.skip_previous,color: Colors.white,size: 36,)),
+                      IconButton(onPressed: (){}, icon: const Icon(Icons.play_circle,color: Colors.white,size: 60,)),
+                      IconButton(onPressed: (){}, icon: const Icon(Icons.skip_next,color: Colors.white,size: 36,)),
+                      IconButton(onPressed: (){}, icon: const Icon(Icons.loop,color: CustomColor.primaryColor,)),
+                    ],
+                  ),
+                  Row(
+                    children: [
 
+                    ],
+                  )
                 ],
               ))
             ],
