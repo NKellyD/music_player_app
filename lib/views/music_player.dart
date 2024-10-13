@@ -10,35 +10,53 @@ class MusicPlayer extends StatefulWidget {
 }
 
 class _MusicPlayerState extends State<MusicPlayer> {
+  Color songColor = const Color(0xFF251117);
+  String artisteName ='';
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      backgroundColor: songColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
-              const Icon(Icons.close, color: Colors.transparent,),
-              Column(
+              const SizedBox(height: 15,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Singing now',style: textTheme.bodyMedium?.copyWith(color: CustomColor.primaryColor),),
-                  const Row(
+                  const Icon(Icons.close, color: Colors.transparent,),
+                  Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        backgroundImage: NetworkImage(''),
-                        radius: 10,
-                      ),
-                      Text('data')
+                      Text('Singing now',style: textTheme.bodyMedium?.copyWith(color: CustomColor.primaryColor),),
+                      const SizedBox(height: 5,),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: NetworkImage(
+                               "https://img.freepik.com/vecteurs-libre/notes-profil-musique-fond_23-2147492175.jpg?t=st=1728806962~exp=1728810562~hmac=2a49e7937b1c7431eba543096675a507a5b4a78ce4afe05a2adb8ae82843e996&w=740"),
+                            radius: 20,
+                          ),
+                          const SizedBox(width: 5,),
+                          Text(artisteName,style: textTheme.bodyLarge?.copyWith(color: Colors.white),)
+                        ],
+                      )
                     ],
-                  )
+                  ),
+                  const Icon(Icons.close, color: Colors.white,),
                 ],
-              )
+              ),
+              Expanded(child: Center(
+                child: artWorkImage(image:""),
+              ))
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
