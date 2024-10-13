@@ -15,10 +15,22 @@ class MyApp extends StatelessWidget {
       title: 'Beats',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+
+          fontFamily: "Calibri",
+          appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0
+          )
+
       ),
       home: const MusicPlayer(),
     );
   }
+
 }
+
+
+
