@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_player_app/views/widgets/art_work_image.dart';
 
 import '../const/colors.dart';
 
@@ -19,7 +20,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
       backgroundColor: songColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 26),
           child: Column(
             children: [
               const SizedBox(height: 15,),
@@ -51,8 +52,27 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   const Icon(Icons.close, color: Colors.white,),
                 ],
               ),
-              Expanded(child: Center(
-                child: artWorkImage(image:""),
+              const Expanded(
+                  flex:2,
+                  child: Center(
+                child: ArtWorkImage(image: "https://img.freepik.com/vecteurs-libre/notes-profil-musique-fond_23-2147492175.jpg?t=st=1728806962~exp=1728810562~hmac=2a49e7937b1c7431eba543096675a507a5b4a78ce4afe05a2adb8ae82843e996&w=740"),
+              )),
+              Expanded(child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Sleeping Beauty',style: textTheme.titleLarge?.copyWith(color: Colors.white),),
+                          Text('End of the World, Epik High',style: textTheme.titleMedium?.copyWith(color: Colors.white),),
+                        ],
+                      ),
+                      const Icon(Icons.favorite,color: CustomColor.primaryColor,)
+                    ],
+                  )
+                ],
               ))
             ],
           ),

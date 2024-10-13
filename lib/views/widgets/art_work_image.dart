@@ -5,6 +5,15 @@ class ArtWorkImage extends StatelessWidget {
   final String image;
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      width: double.maxFinite,
+      height: MediaQuery.of(context).size.height * .4,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(image))
+      ),
+    );
   }
 }
