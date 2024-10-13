@@ -1,8 +1,12 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player_app/views/widgets/art_work_image.dart';
+import 'package:spotify/spotify.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../const/colors.dart';
+import '../const/string.dart';
 
 class MusicPlayer extends StatefulWidget {
   const MusicPlayer({super.key});
@@ -16,6 +20,27 @@ class _MusicPlayerState extends State<MusicPlayer> {
   String artisteName ='KD (Kelly Derlin)';
   String songName ='ONE Day';
   String musicTrackId="6rWblGGW0pBcBcuygxBuWZV";
+  final player = AudioPlayer();
+  Duration? duration;
+
+  @override
+  void initState() {
+    final credentials = SpotifyApiCredentials(CustomString.clientId, CustomString.clientSecret);
+    final spotify = SpotifyApi(credentials);
+    spotify.artists.get(musicTrackId).then((track) async {
+      String? songName = track.name;
+      if(songName != null){
+        final yt = YoutubeExplode();
+        final video =  (await yt.search.search(songName)).first;
+        final videoId = video.id.value;
+        duration = video.duration;
+        var manifest = await yt.videos.streamsClient.getManifest(videoId);
+        var audioUrl = manifest.audioOnly.first.url;
+        player.play(UrlSource(audioUrl.toString()));
+      }
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -76,18 +101,24 @@ class _MusicPlayerState extends State<MusicPlayer> {
                     ],
                   ),
                   const SizedBox(height: 15,),
-                  ProgressBar(
-                    progress: const Duration(minutes: 1),
-                    total: const Duration(minutes: 3,seconds: 30),
-                   // buffered: Duration(milliseconds: 2000),
-                    bufferedBarColor: Colors.white38,
-                    baseBarColor: Colors.white10,
-                    thumbColor: Colors.white,
-                    timeLabelTextStyle: const TextStyle(color: Colors.white),
-                    progressBarColor: Colors.white,
-                    onSeek: (duration) {
-                      print('User selected a new time: $duration');
-                    },
+                  StreamBuilder(
+                    stream: player.onPositionChanged,
+                    builder: ((context, data){
+                      return ProgressBar(
+                        progress: data.data ?? const Duration(seconds: 0),
+                        total: duration ?? const Duration(minutes: 4),
+                        // buffered: Duration(milliseconds: 2000),
+                        bufferedBarColor: Colors.white38,
+                        baseBarColor: Colors.white10,
+                        thumbColor: Colors.white,
+                        timeLabelTextStyle: const TextStyle(color: Colors.white),
+                        progressBarColor: Colors.white,
+                        onSeek: (duration) {
+                          print('User selected a new time: $duration');
+                        },
+                      );
+                    }),
+
                   ),
                   const SizedBox(height: 15,),
                   Row(
@@ -95,7 +126,16 @@ class _MusicPlayerState extends State<MusicPlayer> {
                     children: [
                       IconButton(onPressed: (){}, icon: const Icon(Icons.lyrics_outlined,color: Colors.white,)),
                       IconButton(onPressed: (){}, icon: const Icon(Icons.skip_previous,color: Colors.white,size: 36,)),
-                      IconButton(onPressed: (){}, icon: const Icon(Icons.play_circle,color: Colors.white,size: 60,)),
+                      IconButton(onPressed: (){
+                        if(player.state == PlayerState.playing){
+                          await player.pause();
+                        }else{
+                          await player.resume();
+                        }
+                        setState(() {
+
+                        });
+                      }, icon: Icon(player.state == PlayerState.playing?Icons.pause:Icons.play_circle,color: Colors.white,size: 60,)),
                       IconButton(onPressed: (){}, icon: const Icon(Icons.skip_next,color: Colors.white,size: 36,)),
                       IconButton(onPressed: (){}, icon: const Icon(Icons.loop,color: CustomColor.primaryColor,)),
                     ],
