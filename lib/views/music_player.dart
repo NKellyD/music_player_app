@@ -1,16 +1,15 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_music_player_lyrics/constants/colors.dart';
-import 'package:mobile_music_player_lyrics/constants/strings.dart';
-import 'package:mobile_music_player_lyrics/models/music.dart';
-import 'package:mobile_music_player_lyrics/views/lyrics_page.dart';
+
 import 'package:palette_generator/palette_generator.dart';
 import 'package:spotify/spotify.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
-import '../const/colors.dart';
-import '../const/string.dart';
+import '../constants/colors.dart';
+import '../constants/strings.dart';
+import '../models/music.dart';
+import 'lyrics_page.dart';
 import 'widgets/art_work_image.dart';
 
 class MusicPlayer extends StatefulWidget {
@@ -64,7 +63,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
 
   Future<Color?> getImagePalette(ImageProvider imageProvider) async {
     final PaletteGenerator paletteGenerator =
-    await PaletteGenerator.fromImageProvider(imageProvider);
+        await PaletteGenerator.fromImageProvider(imageProvider);
     return paletteGenerator.dominantColor?.color;
   }
 
@@ -126,95 +125,95 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   )),
               Expanded(
                   child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                music.songName ?? '',
-                                style: textTheme.titleLarge
-                                    ?.copyWith(color: Colors.white),
-                              ),
-                              Text(
-                                music.artistName ?? '-',
-                                style: textTheme.titleMedium
-                                    ?.copyWith(color: Colors.white60),
-                              ),
-                            ],
+                          Text(
+                            music.songName ?? '',
+                            style: textTheme.titleLarge
+                                ?.copyWith(color: Colors.white),
                           ),
-                          const Icon(
-                            Icons.favorite,
-                            color: CustomColors.primaryColor,
-                          )
+                          Text(
+                            music.artistName ?? '-',
+                            style: textTheme.titleMedium
+                                ?.copyWith(color: Colors.white60),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 16),
-                      StreamBuilder(
-                          stream: player.onPositionChanged,
-                          builder: (context, data) {
-                            return ProgressBar(
-                              progress: data.data ?? const Duration(seconds: 0),
-                              total: music.duration ?? const Duration(minutes: 4),
-                              bufferedBarColor: Colors.white38,
-                              baseBarColor: Colors.white10,
-                              thumbColor: Colors.white,
-                              timeLabelTextStyle:
-                              const TextStyle(color: Colors.white),
-                              progressBarColor: Colors.white,
-                              onSeek: (duration) {
-                                player.seek(duration);
-                              },
-                            );
-                          }),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            LyricsPage(music: music, player: player,)));
-                              },
-                              icon: const Icon(Icons.lyrics_outlined,
-                                  color: Colors.white)),
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.skip_previous,
-                                  color: Colors.white, size: 36)),
-                          IconButton(
-                              onPressed: () async {
-                                if (player.state == PlayerState.playing) {
-                                  await player.pause();
-                                } else {
-                                  await player.resume();
-                                }
-                                setState(() {});
-                              },
-                              icon: Icon(
-                                player.state == PlayerState.playing
-                                    ? Icons.pause
-                                    : Icons.play_circle,
-                                color: Colors.white,
-                                size: 60,
-                              )),
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.skip_next,
-                                  color: Colors.white, size: 36)),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.loop,
-                                  color: CustomColors.primaryColor)),
-                        ],
+                      const Icon(
+                        Icons.favorite,
+                        color: CustomColors.primaryColor,
                       )
                     ],
-                  ))
+                  ),
+                  const SizedBox(height: 16),
+                  StreamBuilder(
+                      stream: player.onPositionChanged,
+                      builder: (context, data) {
+                        return ProgressBar(
+                          progress: data.data ?? const Duration(seconds: 0),
+                          total: music.duration ?? const Duration(minutes: 4),
+                          bufferedBarColor: Colors.white38,
+                          baseBarColor: Colors.white10,
+                          thumbColor: Colors.white,
+                          timeLabelTextStyle:
+                              const TextStyle(color: Colors.white),
+                          progressBarColor: Colors.white,
+                          onSeek: (duration) {
+                            player.seek(duration);
+                          },
+                        );
+                      }),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LyricsPage(music: music, player: player,)));
+                          },
+                          icon: const Icon(Icons.lyrics_outlined,
+                              color: Colors.white)),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.skip_previous,
+                              color: Colors.white, size: 36)),
+                      IconButton(
+                          onPressed: () async {
+                            if (player.state == PlayerState.playing) {
+                              await player.pause();
+                            } else {
+                              await player.resume();
+                            }
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            player.state == PlayerState.playing
+                                ? Icons.pause
+                                : Icons.play_circle,
+                            color: Colors.white,
+                            size: 60,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.skip_next,
+                              color: Colors.white, size: 36)),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.loop,
+                              color: CustomColors.primaryColor)),
+                    ],
+                  )
+                ],
+              ))
             ],
           ),
         ),

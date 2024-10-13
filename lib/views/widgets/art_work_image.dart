@@ -1,8 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ArtWorkImage extends StatelessWidget {
-  const ArtWorkImage({super.key,required this.image});
-  final String image;
+  final String? image;
+
+  const ArtWorkImage({super.key, required this.image});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,9 +12,10 @@ class ArtWorkImage extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .4,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(image))
+        image: image != null?DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(image!),
+        ):null
       ),
     );
   }
