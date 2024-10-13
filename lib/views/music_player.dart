@@ -1,3 +1,4 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player_app/views/widgets/art_work_image.dart';
 
@@ -66,12 +67,24 @@ class _MusicPlayerState extends State<MusicPlayer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Sleeping Beauty',style: textTheme.titleLarge?.copyWith(color: Colors.white),),
-                          Text('End of the World, Epik High',style: textTheme.titleMedium?.copyWith(color: Colors.white),),
+                          Text('End of the World, Epik High',style: textTheme.titleMedium?.copyWith(color: Colors.white60),),
                         ],
                       ),
                       const Icon(Icons.favorite,color: CustomColor.primaryColor,)
                     ],
-                  )
+                  ),
+                  const SizedBox(height: 15,),
+                  ProgressBar(
+                    progress: Duration(milliseconds: 1000),
+                    buffered: Duration(milliseconds: 2000),
+                    total: Duration(milliseconds: 5000),
+                    bufferedBarColor: Colors.white60,
+                    baseBarColor: Colors.white,
+                    onSeek: (duration) {
+                      print('User selected a new time: $duration');
+                    },
+                  ),
+
                 ],
               ))
             ],
